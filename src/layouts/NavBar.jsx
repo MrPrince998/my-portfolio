@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-scroll";
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const [activeLink, setActiveLink] = useState("");
-
-  useEffect(() => {
-    setActiveLink(location.hash || "#home");
-  }, [location]);
+  const [activeNavLink, setActiveNavLink] = useState("Home");
 
   const navLinks = [
-    { title: "Home", href: "#home" },
-    { title: "Service", href: "#service" },
-    { title: "About Me", href: "#about" },
-    { title: "Projects", href: "#projects" },
-    { title: "Contact me", href: "#contact" },
+    { title: "Home", to: "home" },
+    { title: "Service", to: "service" },
+    { title: "About Me", to: "about" },
+    { title: "Projects", to: "projects" },
+    { title: "Contact me", to: "contact" },
   ];
 
   
@@ -39,19 +35,20 @@ const NavBar = () => {
             <ul className="flex space-x-4">
               {navLinks.map((link, i) => (
                 <li key={i}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.to} spy={true} offset={-70} duration={500}
+                    onSetActive={()=> setActiveNavLink(link.title)}
                     className={`px-3 py-2 font-medium transition-colors duration-300 relative
                       after:content-[''] after:absolute after:bottom-0 after:left-0
                       after:w-0 after:h-0.5 after:bg-[#FFB600] after:transition-all after:duration-300
                       hover:after:w-full ${
-                        activeLink === link.href
+                        activeNavLink === link.title
                           ? "text-[#FFB600] after:w-full"
                           : "text-gray-700 hover:text-[#FFB600]"
                       }`}
                   >
                     {link.title}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -80,17 +77,17 @@ const NavBar = () => {
           <ul className="pt-2 pb-3 space-y-1 bg-white/80 transition-colors duration-300 backdrop-blur-sm absolute w-full top-[65px] shadow-md">
             {navLinks.map((link, i) => (
               <li key={i}>
-                <a
-                  href={link.href}
+                <Link
+                  to={link.to}
+                  onClick={() => setActiveNavLink(link.title)}
                   className={`block px-4 py-3 font-medium transition-colors duration-300 ${
-                    activeLink === link.href
+                    activeNavLink === link.title
                       ? "text-[#FFB600] bg-gray-100"
                       : "text-gray-900 hover:text-[#FFB600] hover:bg-gray-100"
                   }`}
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.title}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
