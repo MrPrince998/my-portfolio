@@ -62,7 +62,7 @@ const SkillCard = ({ icon, title, progress = 0 }) => {
           <div
             className="
             text-4xl text-[#FFB600] 
-            transition-colors duration-300
+            transition-all duration-300
             group-hover:scale-110
           "
           >

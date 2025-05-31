@@ -6,17 +6,17 @@ import {
   FaPhoneAlt,
   FaWhatsapp,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { AiFillTikTok } from "react-icons/ai";
+import { Link as ScrollLink } from "react-scroll";
 
 const Footer = () => {
   const navLinks = [
-    { title: "Home", to: "/" },
-    { title: "Service", to: "/service" },
-    { title: "About Me", to: "/about" },
-    { title: "Projects", to: "/projects" },
-    { title: "Contact me", to: "/contact" },
+    { title: "Home", to: "home" },
+    { title: "Service", to: "service" },
+    { title: "About Me", to: "about" },
+    { title: "Projects", to: "projects" },
+    { title: "Contact me", to: "contact" },
   ];
 
   const socialMediaLinks = [
@@ -55,8 +55,8 @@ const Footer = () => {
             transition={{ duration: 0.5 }}
             className="space-y-4"
           >
-            <Link
-              to="/"
+            <ScrollLink
+              to="home"
               className="
                 text-2xl font-bold
                 bg-gradient-to-r from-[#815C00] via-[#FFB600] to-[#C19600] bg-clip-text text-transparent
@@ -66,7 +66,7 @@ const Footer = () => {
               "
             >
               Bharat Rana
-            </Link>
+            </ScrollLink>
           </motion.div>
 
           {/* Navigation Links */}
@@ -83,18 +83,18 @@ const Footer = () => {
                   whileHover={{ y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Link
+                  <ScrollLink
                     to={item.to}
                     className="
                     text-[#494949]
                     font-medium
                       hover:text-[#FFB600] 
                       transition-colors duration-300
-                      flex items-center 
+                      flex items-center cursor-pointer
                     "
                   >
                     {item.title}
-                  </Link>
+                  </ScrollLink>
                 </motion.li>
               ))}
             </ul>
@@ -174,14 +174,14 @@ const Footer = () => {
       >
         <p>
           &copy; {new Date().getFullYear()} Designed by{" "}
-          <span
+          <b
             className="
               text-[#FFB600]
               transition-colors duration-300
             "
           >
             Bharat Rana
-          </span>{" "}
+          </b>{" "}
           - UI/UX Designer
         </p>
       </motion.div>

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import HeroImage from "../assets/heroImage/header.jpg";
 import mdheroImage from "../assets/heroImage/mdHeader.svg";
@@ -11,18 +11,20 @@ import {
   FaTiktok,
   FaWhatsapp,
 } from "react-icons/fa";
-import Button from "../components/Button";
-import ServiceCard from "../components/ServiceCard";
+import Button from "../components/ui/Button";
+import ServiceCard from "../components/service/ServiceCard";
 import { CommandLineIcon } from "@heroicons/react/24/outline";
 import { LayoutDashboard, Settings } from "lucide-react";
 import userImg from "../assets/heroImage/userImg.png";
-import SkillCard from "../components/SkillCard";
+import SkillCard from "../components/skill/SkillCard";
 import { IoLogoJavascript } from "react-icons/io5";
 import { DiIllustrator } from "react-icons/di";
-import ProjectCard from "../components/ProjectCard";
-import TestimonailCard from "../components/TestimonialCard";
-import ContactForm from "../components/ContactForm";
+import ProjectCard from "../components/project/ProjectCard";
+import TestimonailCard from "../components/testimonial/TestimonialCard";
+import ContactForm from "../components/contact/ContactForm";
 import Typewriter from "typewriter-effect";
+import { Link as ScrollLink } from "react-scroll";
+import Bio from "../components/bio/Bio";
 
 const HomePage = () => {
   const socialMediaLinks = [
@@ -88,7 +90,7 @@ const HomePage = () => {
   // Animation variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
   };
 
   const staggerContainer = {
@@ -101,6 +103,22 @@ const HomePage = () => {
       },
     },
   };
+
+  // const fetchBio = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:8000/api/eph-get");
+  //     const data = await response.json();
+  //     if (response.ok) {
+  //       setBioData(data);
+  //     }
+  //   } catch (err) {
+  //     console.error("error: ", err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchBio();
+  // }, []);
 
   return (
     <main className="flex flex-col gap-y-16 md:gap-y-25 max-w-7xl mx-auto">
@@ -172,7 +190,9 @@ const HomePage = () => {
             variants={fadeInUp}
             className="flex gap-x-5 justify-center md:justify-start"
           >
-            <Button name={"Hire Me"} />
+            <ScrollLink to={"contact"} spy={true} offset={-70} duration={500}>
+              <Button name={"Hire Me"} />
+            </ScrollLink>
             <Button name={"Download CV"} variant="secondary" />
           </motion.div>
           <motion.div
@@ -180,28 +200,8 @@ const HomePage = () => {
             className="hidden md:grid grid-cols-3 p-6 gap-x-2 bg-[#E1E1E1] mt-20 rounded-lg"
           >
             {/* ... (stats content) */}
-            <div className="border-r-3 border-gray-500">
-              <p className="font-lato font-extrabold text-xl text-[#FD6F00]">
-                5+
-              </p>
-              <p className="font-lato font-bold text-[#686868] f">
-                Experiences
-              </p>
-            </div>
-            <div className="border-r-3 border-gray-500">
-              <p className="font-lato font-extrabold text-xl text-[#FD6F00]">
-                20+
-              </p>
-              <p className="font-lato font-bold text-[#686868]">Project done</p>
-            </div>
-            <div>
-              <p className="font-lato font-extrabold text-xl text-[#FD6F00]">
-                80+
-              </p>
-              <p className="font-lato font-bold text-[#686868]">
-                Happy Clients
-              </p>
-            </div>
+
+            <Bio />
           </motion.div>
         </motion.div>
 
@@ -214,24 +214,7 @@ const HomePage = () => {
           className="grid grid-cols-3 p-6 gap-x-2 bg-[#E1E1E1] md:hidden "
         >
           {/* ... (stats content) */}
-          <div className="border-r-3 border-gray-500">
-            <p className="font-lato font-extrabold text-xl text-[#FD6F00]">
-              5+
-            </p>
-            <p className="font-lato font-bold text-[#686868] f">Experiences</p>
-          </div>
-          <div className="border-r-3 border-gray-500">
-            <p className="font-lato font-extrabold text-xl text-[#FD6F00]">
-              20+
-            </p>
-            <p className="font-lato font-bold text-[#686868]">Project done</p>
-          </div>
-          <div>
-            <p className="font-lato font-extrabold text-xl text-[#FD6F00]">
-              80+
-            </p>
-            <p className="font-lato font-bold text-[#686868]">Happy Clients</p>
-          </div>
+          <Bio />
         </motion.div>
       </motion.header>
 
@@ -268,7 +251,7 @@ const HomePage = () => {
               key={i}
               variants={fadeInUp}
               whileHover={{ y: -20 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              transition={{ type: "tween", duration: 0.2 }}
             >
               <ServiceCard
                 icon={item.icon}
@@ -392,7 +375,7 @@ const HomePage = () => {
         animate={isContactInView ? "visible" : "hidden"}
         variants={fadeInUp}
         id="contact"
-        className="grid gap-y-8 py-8 px-6 text-center font-lato bg-[#EBEBEB] rounded-lg mb-16 hover:shadow-inner transition-shadow duration-300"
+        className="grid gap-y-8 py-5 px-6 text-center font-lato bg-[#EBEBEB] rounded-lg mb-16 hover:shadow-inner transition-shadow duration-300"
       >
         <section
           id="contact"
